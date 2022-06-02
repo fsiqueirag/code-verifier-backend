@@ -1,9 +1,18 @@
+import { Get, Query, Route, Tags } from 'tsoa';
 import { BasicResponse } from './types';
 import { IHelloController } from './interfaces';
 import { LogSuccess } from '../utils/logger';
 
+@Route('/api/hello')
+@Tags('HelloController')
 export class HelloController implements IHelloController {
-  public async getMessage(name?: string): Promise<BasicResponse> {
+  /**
+   * Endpoint to retrieve a message "hello {name}" in JSON
+   * @param {string | undefined} name Name of the person to greet
+   * @returns {BasicResponse} Promise of BasicResponse
+   */
+  @Get('/')
+  public async getMessage(@Query() name?: string): Promise<BasicResponse> {
     LogSuccess('[api/hello] Get Request');
     return {
       message: `Hello, ${name || 'World'}!`
